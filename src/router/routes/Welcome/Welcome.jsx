@@ -1,12 +1,23 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 
+import arrayBufferToString from "../../../utils/arrayBufferToString";
+import { set as setGeoJson } from "../../../utils/geoJson";
 import sextantLogo from "../../../sextant.webp";
+import { dialogue } from "../../../utils/upload";
 
 export default function Welcome() {
+  const navigate = useNavigate();
   const theme = useTheme();
+
+  function handleUpload() {
+    dialogue()
+      .then((file) => setGeoJson(JSON.parse(arrayBufferToString(file))))
+      .then(() => navigate("edit"));
+  }
 
   return (
     <Box
@@ -34,6 +45,7 @@ export default function Welcome() {
       </Typography>
       <Button
         disableElevation={true}
+        onClick={handleUpload}
         variant="contained"
         sx={{ borderRadius: 20, height: 40 }}
       >

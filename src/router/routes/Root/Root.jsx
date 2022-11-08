@@ -5,11 +5,6 @@ export default function Root() {
   return (
     <>
       <Box
-        sx={{
-          width: 80,
-        }}
-      />
-      <Box
         elevation={0}
         sx={{
           flex: 1,

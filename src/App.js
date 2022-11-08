@@ -14,6 +14,7 @@ function App() {
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   const toggleColorMode = useCallback(() => {
+    console.log(mode);
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   }, []);
 
