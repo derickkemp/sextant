@@ -1,36 +1,36 @@
 import Box from "@mui/material/Box";
-import { Suspense } from "react";
+import { useLoaderData } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
-import { get as getGeoJson } from "../../../utils/geoJson";
-import { getMap } from "../../../google/maps";
 import Map from "../../../components/Map/Map";
-import wrapPromise from "../../../utils/wrapPromise";
-
-import mapFallback from "./molumen-world-map.svg";
 
 export default function Editor() {
+  const [geoJson, map] = useLoaderData();
+  const { palette } = useTheme();
+
+  console.log(palette);
+
   return (
     <Box
       sx={{
+        display: "flex",
         height: "100%",
       }}
     >
-      <Suspense
-        fallback={
-          <Box
-            component="img"
-            src={mapFallback}
-            sx={{ height: "100%", width: "100%" }}
-          />
-        }
-      >
-        <Map
-          center={{ lat: -25.73134, lng: 28.21837 }}
-          getMap={wrapPromise(getMap())}
-          getGeoJson={wrapPromise(getGeoJson())}
-          zoom={8}
-        />
-      </Suspense>
+      <Map
+        geoJson={geoJson}
+        gMap={map}
+        sx={{
+          border: `2px solid ${palette.divider}`,
+          borderRadius: "24px",
+          flex: 5,
+          height: "calc(100% - 64px)",
+          m: 1,
+          overflow: "hidden",
+          width: "calc(100% - 64px)",
+        }}
+      />
+      <Box sx={{ flex: 1 }}></Box>
     </Box>
   );
 }

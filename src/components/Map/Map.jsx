@@ -1,14 +1,11 @@
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { useEffect, useRef } from "react";
+import { useTheme } from "@mui/material/styles";
 
 import { getBounds } from "../../google/maps";
 import { dark as darkMap, light as lightMap } from "../../theme/mapStyles";
 
-const Map = ({ center, getGeoJson, getMap, zoom }) => {
-  const gMap = getMap.read();
-  const geoJson = getGeoJson.read();
-
+const Map = ({ gMap, geoJson, sx }) => {
   const mapContainer = useRef();
 
   const theme = useTheme();
@@ -21,11 +18,6 @@ const Map = ({ center, getGeoJson, getMap, zoom }) => {
 
     return () => gMap.element.remove();
   }, [gMap, theme.palette.mode]);
-
-  useEffect(() => {
-    gMap.map.setCenter(center);
-    gMap.map.setZoom(zoom);
-  }, [center, gMap, zoom]);
 
   useEffect(() => {
     gMap.map.data.setStyle({
@@ -72,7 +64,7 @@ const Map = ({ center, getGeoJson, getMap, zoom }) => {
     };
   }, [geoJson, gMap, theme.palette]);
 
-  return <Box ref={mapContainer} sx={{ height: "100%", width: "100%" }} />;
+  return <Box ref={mapContainer} sx={sx} />;
 };
 
 export default Map;

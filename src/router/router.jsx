@@ -1,5 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 
+import { get as getGeoJson } from "../utils/geoJson";
+import { getMap } from "../google/maps";
+
 import About from "./routes/About/About";
 import Editor from "./routes/Editor/Editor";
 import ErrorPage from "./routes/ErrorPage/ErrorPage";
@@ -15,6 +18,7 @@ const router = createBrowserRouter([
       },
       {
         element: <Editor />,
+        loader: () => Promise.all([getGeoJson(), getMap()]),
         path: "edit",
       },
       {
