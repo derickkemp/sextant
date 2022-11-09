@@ -40,7 +40,9 @@
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
     "@googlemaps/js-api-loader": "^1.15.1",
+    "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
+    "formik": "^2.2.9",
     "install": "^0.13.0",
     "npm": "^8.19.3",
     "react-router-dom": "^6.4.3"

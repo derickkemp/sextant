@@ -1,9 +1,20 @@
-// https://issuetracker.google.com/issues/35821412#comment32
-
 import { Loader } from "@googlemaps/js-api-loader";
 
+/**
+ * @typedef {Object} gMap
+ * @property {HTMLElement} element
+ * @property {google.maps.event} event
+ * @property {google.maps.Map} map
+ */
+
+/**
+ * @type {gMap}
+ */
 const gMap = {};
 
+/**
+ * Internal function used to load the google maps libraries
+ */
 async function init() {
   if (window?.google?.maps) {
     // Google maps platform has already been loaded we don't need to load it
@@ -17,6 +28,57 @@ async function init() {
   });
 
   await loader.load();
+}
+
+/**
+ * This function takes an arry of features and returns its bounds.
+ *
+ * @param {google.maps.Data.Feature[]} geometry
+ * @returns {google.maps.LatLngBounds}
+ */
+function getBounds(geometry) {
+  const bounds = new window.google.maps.LatLngBounds();
+
+  geometry.forEach((feature) => {
+    const geometry = feature.getGeometry();
+
+    if (geometry) {
+      processPoints(geometry, bounds.extend, bounds);
+    }
+  });
+
+  return bounds;
+}
+
+/**
+ * Return the map instance
+ *
+ * Google maps platform JavaScript API does not provide a method to destroy
+ * the map. Even unsetting that map variable and deleting the dom element
+ * does not clean up a map instance propperly and leads to a memory leak. The
+ * suggested solution is to instantiate the map once and reuse it every time
+ * you wish to render a map. This function will return the global map
+ * instance, or create a new one and return it if one doesn't already exist.
+ *
+ * @async
+ * @return {Promise<gMap>}
+ * @see {@link https://issuetracker.google.com/issues/35821412#comment32|Google Maps JavaScript API Issue Tracker}
+ */
+async function getMap() {
+  if (gMap.element && gMap.map) {
+    return gMap;
+  }
+
+  await init();
+
+  gMap.element = document.createElement("div");
+  gMap.event = window.google.maps.event;
+
+  gMap.element.style.height = "100%";
+  gMap.element.style.weight = "100%";
+  gMap.map = new window.google.maps.Map(gMap.element, { minZoom: 2 });
+
+  return gMap;
 }
 
 /**
@@ -41,43 +103,6 @@ function processPoints(geometry, callback, currentValue) {
       processPoints(g, callback, currentValue);
     });
   }
-}
-
-/**
- * This function takes an arry of features and returns its bounds.
- *
- * @param {google.maps.Data.Feature[]} geometry
- * @returns {google.maps.LatLngBounds}
- */
-function getBounds(geometry) {
-  const bounds = new window.google.maps.LatLngBounds();
-
-  geometry.forEach((feature) => {
-    const geometry = feature.getGeometry();
-
-    if (geometry) {
-      processPoints(geometry, bounds.extend, bounds);
-    }
-  });
-
-  return bounds;
-}
-
-async function getMap() {
-  if (gMap.element && gMap.map) {
-    return gMap;
-  }
-
-  await init();
-
-  gMap.element = document.createElement("div");
-  gMap.event = window.google.maps.event;
-
-  gMap.element.style.height = "100%";
-  gMap.element.style.weight = "100%";
-  gMap.map = new window.google.maps.Map(gMap.element, { minZoom: 2 });
-
-  return gMap;
 }
 
 export { getBounds, getMap };

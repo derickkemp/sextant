@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import { getBounds } from "../../google/maps";
 import { dark as darkMap, light as lightMap } from "../../theme/mapStyles";
 
-const Map = ({ gMap, geoJson, sx }) => {
+const Map = ({ gMap, geoJson, onFeatureSelect, sx }) => {
   const mapContainer = useRef();
 
   const theme = useTheme();
@@ -33,9 +33,7 @@ const Map = ({ gMap, geoJson, sx }) => {
     const listeners = [];
 
     listeners.push(
-      gMap.map.data.addListener("click", (e) =>
-        e.feature.forEachProperty((value, name) => console.log(name, value))
-      )
+      gMap.map.data.addListener("click", (e) => onFeatureSelect(e.feature))
     );
 
     listeners.push(
@@ -62,7 +60,7 @@ const Map = ({ gMap, geoJson, sx }) => {
         gMap.event.removeListener(listener);
       }
     };
-  }, [geoJson, gMap, theme.palette]);
+  }, [geoJson, gMap, onFeatureSelect, theme.palette]);
 
   return <Box ref={mapContainer} sx={sx} />;
 };

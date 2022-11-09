@@ -1,3 +1,10 @@
+const typography = {
+  h4: {
+    fontSize: 32,
+    lineHeight: 1.25,
+  },
+};
+
 const darkThemeOptions = {
   palette: {
     mode: "dark",
@@ -7,9 +14,11 @@ const darkThemeOptions = {
       main: "#4cdada",
     },
     secondary: {
+      container: "#324b4b",
       contrastText: "#0b1514",
       dark: "#7B8E8E",
       main: "#b0cccb",
+      onContainer: "#cce8e7",
     },
     background: {
       default: "#191c1c",
@@ -34,8 +43,10 @@ const lightThemeOptions = {
       main: "#006a6a",
     },
     secondary: {
-      main: "#4a6363",
+      container: "#cce8e7",
       light: "#6e8282",
+      main: "#4a6363",
+      onContainer: "#051f1f",
     },
     background: {
       default: "#fafdfc",
@@ -52,7 +63,9 @@ const lightThemeOptions = {
   },
 };
 
-const getDesignTokens = (mode) =>
-  mode === "dark" ? darkThemeOptions : lightThemeOptions;
+const getDesignTokens = (mode) => ({
+  ...(mode === "dark" ? darkThemeOptions : lightThemeOptions),
+  typography: typography,
+});
 
 export default getDesignTokens;
