@@ -4,7 +4,7 @@ Sextant is a web app that allows you to view GeoJSON features, manage feature pr
 
 ## Live Demo
 
-You can see a live demo of Sextant here.
+You can see a live demo of Sextant [here](https://sextant.derick.co.za).
 
 ## Requirements
 
