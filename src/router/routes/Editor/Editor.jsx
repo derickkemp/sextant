@@ -4,19 +4,24 @@ import IconButton from "@mui/material/IconButton";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import Typography from "@mui/material/Typography";
 import { useCallback, useState } from "react";
+import useColorMode from "../../../theme/colorMode";
 import { useLoaderData } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import useToggleColorMode from "../../../theme/toggleColorMode/useToggleColorMode";
 
+import download from "../../../utils/download";
 import FeatureForm from "../../../components/FeutureForm/FeatureForm";
+import { getGeoJson } from "../../../google/maps";
 import Md3Button from "../../../components/md3/Md3Button/Md3Button";
 import Map from "../../../components/Map/Map";
 import SextantLogo from "../../../components/SextantLogo/SextantLogo";
+import stringToArrayBuffer from "../../../utils/stringToArrayBuffer";
 
 export default function Editor() {
+  const [colorMode, toggleColorMode] = useColorMode();
   const [geoJson, map] = useLoaderData();
+  const navigate = useNavigate();
   const [selectedFeature, setSelectedFeature] = useState();
-  const toggleColorMode = useToggleColorMode();
   const { palette, spacing } = useTheme();
 
   const handleFeatureSelect = useCallback((feature) => {
@@ -45,6 +50,16 @@ export default function Editor() {
     }
 
     setSelectedFeature();
+  }, []);
+
+  const handleDownload = useCallback(() => {
+    getGeoJson()
+      .then((geoJson) => JSON.stringify(geoJson))
+      .then((geoJson) => stringToArrayBuffer(geoJson))
+      .then((geoJson) => {
+        const now = new Date();
+        download(geoJson, `Sextant-${now.toISOString()}.json`);
+      });
   }, []);
 
   /**
@@ -91,9 +106,11 @@ export default function Editor() {
       >
         <Box sx={{ alignItems: "center", display: "flex" }}>
           <SextantLogo sx={{ mr: 1 / 4, width: 24 }} />
-          <Typography variant="h4">Sextant</Typography>
-          <IconButton onClick={toggleColorMode}>
-            <LightModeIcon />
+          <Typography sx={{ flex: 1 }} variant="h4">
+            Sextant
+          </Typography>
+          <IconButton variant="" onClick={toggleColorMode}>
+            {colorMode === "dark" ? <DarkModeIcon /> : <LightModeIcon />}
           </IconButton>
         </Box>
         {selectedFeature ? (
@@ -104,7 +121,30 @@ export default function Editor() {
             sx={{ overflow: "auto" }}
           />
         ) : (
-          <Md3Button>Download GeoJSON</Md3Button>
+          <Box sx={{ display: "flex", flex: 1, flexDirection: "column" }}>
+            <Md3Button
+              onClick={handleDownload}
+              sx={{ mt: 1 / 4 }}
+              variant="contained"
+            >
+              Download GeoJSON
+            </Md3Button>
+            <Md3Button
+              onClick={() => navigate("/")}
+              sx={{ mt: 1 / 4 }}
+              variant="outlined"
+            >
+              Upload a New File
+            </Md3Button>
+            <Box sx={{ flex: 1 }} />
+            <Md3Button
+              onClick={() => navigate("/about")}
+              sx={{ mt: 1 / 4 }}
+              variant="outlined"
+            >
+              About Sextant
+            </Md3Button>
+          </Box>
         )}
       </Box>
     </Box>

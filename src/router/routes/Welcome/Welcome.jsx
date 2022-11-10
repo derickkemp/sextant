@@ -4,21 +4,54 @@ import { useNavigate } from "react-router-dom";
 
 import arrayBufferToString from "../../../utils/arrayBufferToString";
 import { dialogue } from "../../../utils/upload";
+import fileToArrayBuffer from "../../../utils/fileToArrayBuffer";
 import Md3Button from "../../../components/md3/Md3Button/Md3Button";
 import { set as setGeoJson } from "../../../utils/geoJson";
 import SextantLogo from "../../../components/SextantLogo/SextantLogo";
+import { useCallback, useEffect, useRef } from "react";
 
 export default function Welcome() {
+  const dropZoneRef = useRef();
   const navigate = useNavigate();
 
-  function handleUpload() {
+  const handleUpload = useCallback(() => {
     dialogue()
       .then((file) => setGeoJson(JSON.parse(arrayBufferToString(file))))
       .then(() => navigate("edit"));
-  }
+  }, [navigate]);
+
+  const handleDragOver = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDrop = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      fileToArrayBuffer(e.dataTransfer.files[0])
+        .then((file) => setGeoJson(JSON.parse(arrayBufferToString(file))))
+        .then(() => navigate("edit"));
+    },
+    [navigate]
+  );
+
+  useEffect(() => {
+    const dropZoneEl = dropZoneRef.current;
+
+    dropZoneEl.addEventListener("dragover", handleDragOver);
+    dropZoneEl.addEventListener("drop", handleDrop);
+
+    return () => {
+      dropZoneEl.removeEventListener("dragover", handleDragOver);
+      dropZoneEl.removeEventListener("drop", handleDrop);
+    };
+  }, [handleDragOver, handleDrop]);
 
   return (
     <Box
+      ref={dropZoneRef}
       sx={{
         alignItems: "center",
         display: "flex",

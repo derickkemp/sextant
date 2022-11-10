@@ -91,6 +91,17 @@ function getBounds(geometry) {
 }
 
 /**
+ * Return the current features as a GeoJSON object
+ *
+ * @returns Promise<Object>
+ */
+function getGeoJson() {
+  return new Promise((resolve) => {
+    gMap.map.data.toGeoJson((geoJson) => resolve(geoJson));
+  });
+}
+
+/**
  * Return the map instance
  *
  * Google maps platform JavaScript API does not provide a method to destroy
@@ -145,4 +156,4 @@ function processPoints(geometry, callback, currentValue) {
   }
 }
 
-export { addFeatures, clearFeatures, getBounds, getMap };
+export { addFeatures, clearFeatures, getBounds, getGeoJson, getMap };
