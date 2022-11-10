@@ -27,6 +27,10 @@ To get a local copy of Sextant working on your machine, follow these steps
 - Install the required packages.
 
   `npm install`
+  
+- Create a file named `.env.local` in the project root and add the following line
+
+  `REACT_APP_GOOGLE_MAPS_KEY=<REPLACE THIS WITH YOUR GOOGLE MAPS API KEY>`
 
 - Start the development server.
 
