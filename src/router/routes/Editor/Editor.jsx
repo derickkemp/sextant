@@ -4,18 +4,18 @@ import IconButton from "@mui/material/IconButton";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import Typography from "@mui/material/Typography";
 import { useCallback, useState } from "react";
-import useColorMode from "../../../theme/useColorMode/useColorMode";
+import useColorMode from "../../../hooks/useColorMode/useColorMode";
 import { useLoaderData } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 
-import download from "../../../utils/download";
+import download from "../../../utils/download/download";
 import FeatureForm from "../../../components/FeutureForm/FeatureForm";
 import { getGeoJson } from "../../../google/maps";
 import Md3Button from "../../../components/md3/Md3Button/Md3Button";
 import Map from "../../../components/Map/Map";
 import SextantLogo from "../../../components/SextantLogo/SextantLogo";
-import stringToArrayBuffer from "../../../utils/stringToArrayBuffer";
+import stringToArrayBuffer from "../../../utils/stringToArrayBuffer/stringToArrayBuffer";
 
 export default function Editor() {
   const [colorMode, toggleColorMode] = useColorMode();

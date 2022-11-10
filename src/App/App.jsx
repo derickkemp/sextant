@@ -1,7 +1,7 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { RouterProvider } from "react-router-dom";
-import useColorMode from "../theme/useColorMode/useColorMode";
+import useColorMode from "../hooks/useColorMode/useColorMode";
 import { useMemo } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 

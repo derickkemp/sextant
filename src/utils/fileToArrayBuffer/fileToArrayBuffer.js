@@ -1,10 +1,10 @@
 /**
- * Convert a Blob or File object to an ArrayBuffer
+ * Convert a Blob or File to an ArrayBuffer
  *
- * @param {(Blob | File)} file The file to read
- * @returns {Promise} A promise containing an ArrayBuffer
+ * @param {(Blob | File)} file
+ * @returns {Promise<ArrayBuffer>}
  */
-function readFile(file) {
+function fileToArrayBuffer(file) {
   return new Promise((resolve) => {
     // setting up the reader
     const reader = new FileReader();
@@ -16,4 +16,4 @@ function readFile(file) {
   });
 }
 
-export default readFile;
+export default fileToArrayBuffer;

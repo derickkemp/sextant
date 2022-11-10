@@ -1,4 +1,4 @@
-import readFile from "./readFile";
+import fileToArrayBuffer from "../fileToArrayBuffer/fileToArrayBuffer";
 
 /**
  * Open file upload dialog
@@ -15,7 +15,9 @@ function dialogue() {
       "change",
       (event) => {
         // Getting a hold of the file reference
-        readFile(event.target.files[0]).then((result) => resolve(result));
+        fileToArrayBuffer(event.target.files[0]).then((result) =>
+          resolve(result)
+        );
       },
       {
         once: true,

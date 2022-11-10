@@ -2,9 +2,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 
-import arrayBufferToString from "../../../utils/arrayBufferToString";
-import { dialogue } from "../../../utils/upload";
-import fileToArrayBuffer from "../../../utils/fileToArrayBuffer";
+import arrayBufferToString from "../../../utils/arrayBufferToString/arrayBufferToString";
+import { dialogue } from "../../../utils/upload/upload";
+import fileToArrayBuffer from "../../../utils/fileToArrayBuffer/fileToArrayBuffer";
 import Md3Button from "../../../components/md3/Md3Button/Md3Button";
 import { set as setGeoJson } from "../../../utils/geoJson/geoJson";
 import SextantLogo from "../../../components/SextantLogo/SextantLogo";
