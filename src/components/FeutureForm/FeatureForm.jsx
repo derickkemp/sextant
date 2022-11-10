@@ -5,7 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 import { useMemo } from "react";
 
 import Md3Button from "../md3/Md3Button/Md3Button";
@@ -32,10 +31,14 @@ function Md3TextInput({ label, sx, ...props }) {
 }
 
 export default function FeatureForm({ feature, onSubmit, sx }) {
+  const id = feature.getId();
+
   const properties = useMemo(() => {
     const properties = {};
 
-    feature.forEachProperty((value, field) => (properties[field] = value));
+    feature.forEachProperty(
+      (value, field) => (properties[field] = value ? value : "")
+    );
 
     return properties;
   }, [feature]);
@@ -51,8 +54,12 @@ export default function FeatureForm({ feature, onSubmit, sx }) {
    */
   return (
     <Formik
-      initialValues={{ addProperty: "", properties: properties }}
-      key={feature.getId()}
+      initialValues={{
+        addProperty: "",
+        id: id,
+        properties: properties,
+      }}
+      key={id}
       onSubmit={(values, { setSubmitting }) => {
         onSubmit(feature, values.properties);
         setSubmitting(false);
@@ -65,7 +72,13 @@ export default function FeatureForm({ feature, onSubmit, sx }) {
           onSubmit={handleSubmit}
           sx={sx}
         >
-          <Typography variant="h5">{feature.getId()}</Typography>
+          <Md3TextInput
+            disabled={true}
+            key={"id"}
+            label={"ID"}
+            name={`id`}
+            sx={{ my: 1 / 4, width: "100%" }}
+          />
           {Object.keys(values.properties).map((key) => (
             <Md3TextInput
               InputProps={{
@@ -93,7 +106,7 @@ export default function FeatureForm({ feature, onSubmit, sx }) {
               key={`properties.${key}`}
               label={key}
               name={`properties.${key}`}
-              sx={{ my: 1 / 4 }}
+              sx={{ my: 1 / 4, width: "100%" }}
             />
           ))}
 
@@ -124,7 +137,7 @@ export default function FeatureForm({ feature, onSubmit, sx }) {
             key="addProperty"
             label="Add Property"
             name="addProperty"
-            sx={{ my: 1 / 4 }}
+            sx={{ my: 1 / 4, width: "100%" }}
           />
 
           <Md3Button type="submit" variant="contained">

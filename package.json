@@ -44,6 +44,7 @@
     "@mui/material": "^5.10.12",
     "formik": "^2.2.9",
     "install": "^0.13.0",
+    "nanoid": "^4.0.0",
     "npm": "^8.19.3",
     "react-router-dom": "^6.4.3"
   }

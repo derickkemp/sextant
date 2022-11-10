@@ -1,8 +1,12 @@
 import Box from "@mui/material/Box";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import IconButton from "@mui/material/IconButton";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import Typography from "@mui/material/Typography";
 import { useCallback, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import useToggleColorMode from "../../../theme/toggleColorMode/useToggleColorMode";
 
 import FeatureForm from "../../../components/FeutureForm/FeatureForm";
 import Md3Button from "../../../components/md3/Md3Button/Md3Button";
@@ -11,8 +15,8 @@ import SextantLogo from "../../../components/SextantLogo/SextantLogo";
 
 export default function Editor() {
   const [geoJson, map] = useLoaderData();
-
   const [selectedFeature, setSelectedFeature] = useState();
+  const toggleColorMode = useToggleColorMode();
   const { palette, spacing } = useTheme();
 
   const handleFeatureSelect = useCallback((feature) => {
@@ -88,13 +92,16 @@ export default function Editor() {
         <Box sx={{ alignItems: "center", display: "flex" }}>
           <SextantLogo sx={{ mr: 1 / 4, width: 24 }} />
           <Typography variant="h4">Sextant</Typography>
+          <IconButton onClick={toggleColorMode}>
+            <LightModeIcon />
+          </IconButton>
         </Box>
         {selectedFeature ? (
           <FeatureForm
             feature={selectedFeature}
             onPropertyRemove={handlePropertyRemove}
             onSubmit={handleSubmit}
-            sx={{ overflow: "scroll" }}
+            sx={{ overflow: "auto" }}
           />
         ) : (
           <Md3Button>Download GeoJSON</Md3Button>

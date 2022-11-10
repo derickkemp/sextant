@@ -1,4 +1,5 @@
 import { Loader } from "@googlemaps/js-api-loader";
+import { nanoid } from "nanoid";
 
 /**
  * @typedef {Object} gMap
@@ -28,6 +29,45 @@ async function init() {
   });
 
   await loader.load();
+}
+
+/**
+ * Add GeoJSON to the map.
+ *
+ * This function will make sure that the object passed is a valid feature
+ * collection and add auto generates feature ids for features that do not
+ * have ids. Feature ids are required for application to know when the
+ * selected feature has changed, but some GeoJSON files do not include them.
+ *
+ * @param {Object} geoJson
+ */
+function addFeatures(geoJson) {
+  if (!geoJson?.type === "FeatureCollection") {
+    throw new TypeError(
+      "The uploaded file does not contain valid GeoJSON data."
+    );
+  }
+
+  gMap.map.data.addGeoJson({
+    ...geoJson,
+    features: geoJson.features.map((feature) => ({
+      ...feature,
+      ...(!feature.id && { id: nanoid(6) }),
+    })),
+  });
+}
+
+/**
+ * Clear all GeoJSON features from the map
+ */
+function clearFeatures() {
+  const features = [];
+
+  gMap.map.data.forEach((feature) => features.push(feature));
+
+  for (const feature of features) {
+    gMap.map.data.remove(feature);
+  }
 }
 
 /**
@@ -105,4 +145,4 @@ function processPoints(geometry, callback, currentValue) {
   }
 }
 
-export { getBounds, getMap };
+export { addFeatures, clearFeatures, getBounds, getMap };

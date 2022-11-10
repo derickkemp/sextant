@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import getDesignTokens from "./theme/getDesignTokens";
 import router from "./router/router";
-import ToggleColorModeContext from "./theme/ToggleColorModeContext";
+import ToggleColorModeContext from "./theme/toggleColorMode/ToggleColorModeContext";
 
 function App() {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -26,8 +26,6 @@ function App() {
   const toggleColorMode = useCallback(() => {
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   }, []);
-
-  console.log(toggleColorMode);
 
   return (
     <ToggleColorModeContext.Provider value={toggleColorMode}>

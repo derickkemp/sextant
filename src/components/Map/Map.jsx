@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import { useEffect, useRef } from "react";
 import { useTheme } from "@mui/material/styles";
 
-import { getBounds } from "../../google/maps";
+import { addFeatures, clearFeatures, getBounds } from "../../google/maps";
 import { dark as darkMap, light as lightMap } from "../../theme/mapStyles";
 
 const Map = ({ gMap, geoJson, onFeatureSelect, sx }) => {
@@ -25,7 +25,7 @@ const Map = ({ gMap, geoJson, onFeatureSelect, sx }) => {
       strokeColor: theme.palette.primary.main,
     });
 
-    gMap.map.data.addGeoJson(geoJson);
+    addFeatures(geoJson);
 
     const bounds = getBounds(gMap.map.data);
     gMap.map.fitBounds(bounds);
@@ -59,6 +59,8 @@ const Map = ({ gMap, geoJson, onFeatureSelect, sx }) => {
         const listener = listeners.pop();
         gMap.event.removeListener(listener);
       }
+
+      clearFeatures();
     };
   }, [geoJson, gMap, onFeatureSelect, theme.palette]);
 
