@@ -6,7 +6,7 @@ import arrayBufferToString from "../../../utils/arrayBufferToString";
 import { dialogue } from "../../../utils/upload";
 import fileToArrayBuffer from "../../../utils/fileToArrayBuffer";
 import Md3Button from "../../../components/md3/Md3Button/Md3Button";
-import { set as setGeoJson } from "../../../utils/geoJson";
+import { set as setGeoJson } from "../../../utils/geoJson/geoJson";
 import SextantLogo from "../../../components/SextantLogo/SextantLogo";
 import { useCallback, useEffect, useRef } from "react";
 

@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import Typography from "@mui/material/Typography";
 import { useCallback, useState } from "react";
-import useColorMode from "../../../theme/colorMode";
+import useColorMode from "../../../theme/useColorMode/useColorMode";
 import { useLoaderData } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";

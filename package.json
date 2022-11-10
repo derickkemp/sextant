@@ -1,6 +1,7 @@
 {
   "name": "sextant",
   "version": "0.1.0",
+  "homepage": "https://sextant.derick.co.za",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -12,9 +13,11 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "start": "react-scripts start",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!(nanoid|@mui)/)\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -43,6 +46,7 @@
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.12",
     "formik": "^2.2.9",
+    "gh-pages": "^4.0.0",
     "install": "^0.13.0",
     "nanoid": "^4.0.0",
     "npm": "^8.19.3",

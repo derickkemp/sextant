@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import { get as getGeoJson } from "../utils/geoJson";
+import { get as getGeoJson } from "../utils/geoJson/geoJson";
 import { getMap } from "../google/maps";
 
 import About from "./routes/About/About";

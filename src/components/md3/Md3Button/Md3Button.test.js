@@ -1,17 +1,11 @@
-import Button from "@mui/material/Button";
+import { render, screen } from "@testing-library/react";
 
-export default function Md3Button({ children, sx, ...props }) {
-  return (
-    <Button
-      disableElevation={true}
-      sx={{
-        ...sx,
-        borderRadius: 20,
-        height: 40,
-      }}
-      {...props}
-    >
-      {children}
-    </Button>
-  );
-}
+import Md3Button from "./Md3Button";
+
+describe("Md3Button Component", () => {
+  it("Rendering a button has the correct label", () => {
+    render(<Md3Button>Submit</Md3Button>);
+
+    expect(screen.getByText("Submit")).toBeInTheDocument();
+  });
+});

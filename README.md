@@ -27,7 +27,7 @@ To get a local copy of Sextant working on your machine, follow these steps
 - Install the required packages.
 
   `npm install`
-  
+
 - Create a file named `.env.local` in the project root and add the following line
 
   `REACT_APP_GOOGLE_MAPS_KEY=<REPLACE THIS WITH YOUR GOOGLE MAPS API KEY>`
@@ -37,3 +37,17 @@ To get a local copy of Sextant working on your machine, follow these steps
   `npm start`
 
 - Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+## Automated Testing
+
+To run the automated tests, perform the [Installation](#Installation) and execute the following steps
+
+- Navigate to project directory.
+
+  `cd sextant`
+
+- Start the test watched.
+
+  `npm test`
+
+For the sake of time, I've only included five test files to demonstrate familiarity with jest testing. This includes two components, one hook, one plain javascript function and one smoke test.
