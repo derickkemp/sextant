@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/sextant/static/css/main.eb9aca96.css",
+    "main.js": "/sextant/static/js/main.83550ea8.js",
+    "static/media/sextant.webp": "/sextant/static/media/sextant.35bc40139c14f82e383f.webp",
+    "index.html": "/sextant/index.html",
+    "main.eb9aca96.css.map": "/sextant/static/css/main.eb9aca96.css.map",
+    "main.83550ea8.js.map": "/sextant/static/js/main.83550ea8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eb9aca96.css",
+    "static/js/main.83550ea8.js"
+  ]
+}
