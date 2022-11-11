@@ -1,25 +1,12 @@
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { RouterProvider } from "react-router-dom";
-import useColorMode from "../hooks/useColorMode/useColorMode";
-import { useMemo } from "react";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
-import getDesignTokens from "../theme/getDesignTokens";
 import router from "../router/router";
+import useCreateTheme from "../hooks/useCreateTheme/useCreateTheme";
 
 function App() {
-  const [colorMode] = useColorMode();
-  const isLarge = useMediaQuery("(min-width:840px)");
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        ...getDesignTokens(colorMode),
-        spacing: isLarge ? 32 : 8,
-      }),
-    [isLarge, colorMode]
-  );
+  const theme = useCreateTheme();
 
   return (
     <ThemeProvider theme={theme}>
