@@ -1,6 +1,8 @@
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useMemo } from "react";
 
+import getDesignTokens from "../../theme/getDesignTokens";
+
 const mediaSizes = {
   LARGE: Symbol(1),
   MEDIUM: Symbol(2),
@@ -8,8 +10,10 @@ const mediaSizes = {
 };
 
 function useMediaSize() {
-  const isLarge = useMediaQuery("(min-width:840px)");
-  const isMedium = useMediaQuery("(min-width:600px)");
+  const { breakpoints } = getDesignTokens("light");
+
+  const isLarge = useMediaQuery(`(min-width:${breakpoints.values.xl}px)`);
+  const isMedium = useMediaQuery(`(min-width:${breakpoints.values.md}px)`);
 
   const size = useMemo(() => {
     if (isLarge) {

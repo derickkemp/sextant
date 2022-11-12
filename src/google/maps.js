@@ -127,7 +127,10 @@ async function getMap() {
 
   gMap.element.style.height = "100%";
   gMap.element.style.weight = "100%";
-  gMap.map = new window.google.maps.Map(gMap.element, { minZoom: 2 });
+  gMap.map = new window.google.maps.Map(gMap.element, {
+    disableDefaultUI: true,
+    minZoom: 2,
+  });
 
   return gMap;
 }

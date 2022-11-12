@@ -5,21 +5,17 @@ import getDesignTokens from "../../theme/getDesignTokens";
 import useColorMode from "../useColorMode/useColorMode";
 import useMediaSize, { mediaSizes } from "../useMediaSize/useMediaSize";
 
+const spacings = {
+  [mediaSizes.LARGE.description]: 32,
+  [mediaSizes.MEDIUM.description]: 12,
+  [mediaSizes.SMALL.description]: 8,
+};
+
 export default function useCreateTheme() {
   const [colorMode] = useColorMode();
   const mediaSize = useMediaSize();
 
-  const spacing = useMemo(() => {
-    if (mediaSize === mediaSizes.LARGE) {
-      return 32;
-    }
-
-    if (mediaSize === mediaSizes.MEDIUM) {
-      return 12;
-    }
-
-    return 8;
-  }, [mediaSize]);
+  const spacing = useMemo(() => spacings[mediaSize.description], [mediaSize]);
 
   const theme = useMemo(
     () =>

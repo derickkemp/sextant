@@ -1,10 +1,3 @@
-const typography = {
-  h4: {
-    fontSize: 32,
-    lineHeight: 1.25,
-  },
-};
-
 const darkThemeOptions = {
   palette: {
     mode: "dark",
@@ -64,8 +57,16 @@ const lightThemeOptions = {
 };
 
 const getDesignTokens = (mode) => ({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 300,
+      md: 600,
+      lg: 720,
+      xl: 840,
+    },
+  },
   ...(mode === "dark" ? darkThemeOptions : lightThemeOptions),
-  typography: typography,
 });
 
 export default getDesignTokens;
