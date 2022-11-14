@@ -32,7 +32,12 @@ export default function Sidebar({
           feature={feature}
           onPropertyRemove={onPropertyRemove}
           onSubmit={onSubmit}
-          sx={{ overflow: "auto" }}
+          sx={{
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            overflow: "hidden",
+          }}
         />
       ) : (
         <Box sx={{ display: "flex", flex: 1, flexDirection: "column" }}>

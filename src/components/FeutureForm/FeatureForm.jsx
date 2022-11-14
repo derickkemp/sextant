@@ -72,77 +72,79 @@ export default function FeatureForm({ feature, onSubmit, sx }) {
           onSubmit={handleSubmit}
           sx={sx}
         >
-          <Md3TextInput
-            disabled={true}
-            key={"id"}
-            label={"ID"}
-            name={`id`}
-            sx={{ my: 1 / 4, width: "100%" }}
-          />
-          {Object.keys(values.properties).map((key) => (
+          <Box sx={{ overflow: "auto" }}>
+            <Md3TextInput
+              disabled={true}
+              key={"id"}
+              label={"ID"}
+              name={`id`}
+              sx={{ my: "8px", width: "100%" }}
+            />
+            {Object.keys(values.properties).map((key) => (
+              <Md3TextInput
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        edge="end"
+                        onClick={() => {
+                          const newValues = {
+                            ...values,
+                            properties: {
+                              ...values.properties,
+                            },
+                          };
+                          delete newValues.properties[key];
+                          setValues(newValues);
+                        }}
+                      >
+                        <RemoveCircleOutlineIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                key={`properties.${key}`}
+                label={key}
+                name={`properties.${key}`}
+                sx={{ my: "8px", width: "100%" }}
+              />
+            ))}
             <Md3TextInput
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
+                      disabled={values.addProperty.length < 1}
                       edge="end"
-                      onClick={() => {
-                        const newValues = {
+                      onClick={() =>
+                        setValues({
                           ...values,
                           properties: {
                             ...values.properties,
+                            [values.addProperty]: "",
                           },
-                        };
-                        delete newValues.properties[key];
-                        setValues(newValues);
-                      }}
+                          addProperty: "",
+                        })
+                      }
                     >
-                      <RemoveCircleOutlineIcon />
+                      <AddCircleOutlineIcon />
                     </IconButton>
                   </InputAdornment>
                 ),
               }}
-              key={`properties.${key}`}
-              label={key}
-              name={`properties.${key}`}
-              sx={{ my: 1 / 4, width: "100%" }}
+              key="addProperty"
+              label="Add Property"
+              name="addProperty"
+              sx={{ my: "8px", width: "100%" }}
             />
-          ))}
-
-          <Md3TextInput
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    disabled={values.addProperty.length < 1}
-                    edge="end"
-                    onClick={() =>
-                      setValues({
-                        ...values,
-                        properties: {
-                          ...values.properties,
-                          [values.addProperty]: "",
-                        },
-                        addProperty: "",
-                      })
-                    }
-                  >
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            key="addProperty"
-            label="Add Property"
-            name="addProperty"
-            sx={{ my: 1 / 4, width: "100%" }}
-          />
-
-          <Md3Button type="submit" variant="contained">
-            Submit
-          </Md3Button>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Md3Button type="submit" variant="contained">
+              Submit
+            </Md3Button>
+          </Box>
         </Box>
       )}
     </Formik>

@@ -1,17 +1,27 @@
 import Box from "@mui/material/Box";
-import { useCallback, useState } from "react";
+import Dialog from "@mui/material/Dialog";
+import DownloadIcon from "@mui/icons-material/Download";
+import Fab from "@mui/material/Fab";
+import { forwardRef, useCallback, useState } from "react";
+import Slide from "@mui/material/Slide";
 import { useLoaderData } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 
 import download from "../../../utils/download/download";
+import FeatureForm from "../../../components/FeutureForm/FeatureForm";
 import { getGeoJson } from "../../../google/maps";
 import Map from "../../../components/Map/Map";
 import stringToArrayBuffer from "../../../utils/stringToArrayBuffer/stringToArrayBuffer";
+import TopAppBar from "../../../components/TopAppBar/TopAppBar";
 import useMediaSize, {
   mediaSizes,
 } from "../../../hooks/useMediaSize/useMediaSize";
 
 import Sidebar from "./Sidebar/Sidebar";
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function Editor() {
   const [geoJson, map] = useLoaderData();
@@ -73,9 +83,11 @@ export default function Editor() {
     <Box
       sx={{
         display: "flex",
+        flexDirection: showSidebar ? "row" : "column",
         height: "100%",
       }}
     >
+      {!showSidebar && <TopAppBar />}
       <Map
         geoJson={geoJson}
         gMap={map}
@@ -90,13 +102,48 @@ export default function Editor() {
           overflow: "hidden",
         }}
       />
-      {showSidebar.LARGE && (
+      {showSidebar ? (
         <Sidebar
           feature={selectedFeature}
           onDownload={handleDownload}
           onPropertyRemove={handlePropertyRemove}
           onSubmit={handleSubmit}
         />
+      ) : (
+        <>
+          <Fab
+            aria-label="download"
+            color="primary"
+            onClick={handleDownload}
+            sx={{
+              bottom: spacing(2),
+              position: "absolute",
+              right: spacing(2),
+            }}
+          >
+            <DownloadIcon />
+          </Fab>
+          <Dialog
+            fullScreen
+            open={!!selectedFeature}
+            TransitionComponent={Transition}
+          >
+            <TopAppBar onBack={() => setSelectedFeature()} />
+            {selectedFeature && (
+              <FeatureForm
+                feature={selectedFeature}
+                onSubmit={handleSubmit}
+                sx={{
+                  display: "flex",
+                  flex: 1,
+                  flexDirection: "column",
+                  overflow: "hidden",
+                  p: 1,
+                }}
+              />
+            )}
+          </Dialog>
+        </>
       )}
     </Box>
   );
